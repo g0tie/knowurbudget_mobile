@@ -1,0 +1,8 @@
+{
+    "appId": "io.ionic.knowurbudget",
+    "appName": "knowurbudget",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "build",
+    "cordova": {}
+  }

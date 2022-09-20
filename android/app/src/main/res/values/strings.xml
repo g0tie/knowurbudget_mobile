@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">knowurbudget</string>
+    <string name="title_activity_main">knowurbudget</string>
+    <string name="package_name">io.ionic.knowurbudget</string>
+    <string name="custom_url_scheme">io.ionic.knowurbudget</string>
+</resources>

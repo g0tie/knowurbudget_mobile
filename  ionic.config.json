@@ -1,0 +1,7 @@
+{
+    "name": "knowurbudget",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+}
