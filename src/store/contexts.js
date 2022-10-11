@@ -12,6 +12,12 @@ import { syncData } from "../api";
 
 const MainContext = React.createContext();
 
+/**
+ * Set the reudcer function to modify global state data
+ * @param {Object} state 
+ * @param {Object} action 
+ * @returns {Object} the new modified state
+ */
 function MainReducer(state, action) {
     switch (action.type) {
 
@@ -41,15 +47,16 @@ function MainReducer(state, action) {
       
       case 'setUserData': {
         const userDatas = action.payload;
-        const totalExpenses = calculateTotalExpenses(userDatas.expenses);
+        const totalExpenses = calculateTotalExpenses(userDatas.user.expenses);
         const newState = {...state,
+          csrf: userDatas.csrf,
           logged: true,
           totalExpenses,
-          expenses: userDatas.expenses.map(expense => {
+          expenses: userDatas.user.expenses.map(expense => {
             return{...expense, remoteId: expense.id} 
           }),
-          user: {name: userDatas.username},
-          limit: { value: parseInt( userDatas.limit.amount) },
+          user: {name: userDatas.user.username},
+          limit: { value: parseInt( userDatas.user.limit.amount) },
         }
 
         persistData(newState, getCurrentUser());
@@ -61,13 +68,21 @@ function MainReducer(state, action) {
         return action.payload;
       }
 
+      case 'setCSRF': {
+        return {...state, csrf: action.payload}
+      }
+
       default: {
         throw new Error(`Unhandled action type: ${action.type}`)
       }
     }
 }
 
-    
+/**
+ * Set global state context at app launch
+ * @param {Props} param0 
+ * @returns {React.FC}
+ */
 function MainProvider({children}) {
     let expenses = getDatas('expenses');
     let totalExpenses = calculateTotalExpenses(expenses);
@@ -83,7 +98,8 @@ function MainProvider({children}) {
         error:false,
         logged: false,
         childrenAccounts: [],
-        currentUser: null
+        currentUser: null,
+        csrf: null
     })
 
     const value = {state, dispatch}

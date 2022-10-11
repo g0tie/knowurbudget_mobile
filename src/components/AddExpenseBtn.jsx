@@ -28,8 +28,14 @@ const AddExpenseBtn = () => {
             user_id: await parseInt( getCurrentUser() ),
         }
         
-        const remoteId = await addRemoteExpense(expense, getJWT());
-        expense.remoteId = remoteId;
+        const isUserLogged = JSON.parse( window.localStorage.getItem("logged")) ?? false;
+        
+        if (isUserLogged) {
+
+            const data = await addRemoteExpense(expense, state.csrf);
+            expense.remoteId = data.value;
+            await dispatch({type:"setCSRF", payload:data.csrf});
+        }
 
         await insertData('expenses', expense);
         const expenses = await  getDatas('expenses', getCurrentUser());
@@ -47,14 +53,17 @@ const AddExpenseBtn = () => {
     return (
         <>
             <button 
+            data-testid="addExpense"
             onClick={() => setIsOpen(true)}
-            className='float-right text-center rounded-full w-16 h-16 sticky bottom-8 right-8 bg-indigo-600 text-white'>
+            className='float-right text-center rounded-full w-16 h-16 sticky bottom-16 right-0 bg-budget text-white'>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             </button>
 
-            <Modal isOpen={isOpen} title="Ajouter une dépense" action={addExpense} closeAction={setIsOpen}> 
+            <Modal 
+            
+            isOpen={isOpen} title="Ajouter une dépense" action={addExpense} closeAction={setIsOpen}> 
             
             {
                 error &&

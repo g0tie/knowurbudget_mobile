@@ -58,7 +58,7 @@ const barOptions = {
 const Graph = ({title, type, data}) => {
     const isMobile = useMediaQuery({ query: '(min-width: 300px)' })
     return(
-        <div className={type === 'pie' ? 'w-96' :'sm:w-5/12 xs:w-full' } style={{maxHeight:"500px", maxWidth:"700px"}}>
+        <div className={type === 'pie' ? 'w-72' :'sm:w-5/12 xs:w-full' } style={{maxHeight:"500px", maxWidth:"700px"}}>
             <h1 className='text-center text-2xl font-bold'>{title}</h1>
             {
                 type === "pie" ?
