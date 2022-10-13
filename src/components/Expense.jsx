@@ -47,7 +47,7 @@ const Expense = ({title, amount, date, type, id, remoteId}) => {
                     <span>{type}</span>
                 </div>
                 
-                <span className="flex-grow text-right text-4xl">{amount} €</span>
+                <span className="flex-grow text-right md:text-4xl xs:text-2xl">{amount} €</span>
             </div>
 
           </div>
