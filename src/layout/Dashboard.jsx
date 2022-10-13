@@ -40,7 +40,7 @@ const Dashboard  = () => {
     display: 'flex', flexDirection: 'column', fontSize:"13px"
   } 
   return (
-    <div className="App md:p-8 xs:p-0" style={{height:"100vh"}}>
+    <div className="App md:p-8 xs:pt-4" style={{height:"100vh"}}>
     <Layout.Header />
 
     {/* <div className='xs:flex-wrap xs:flex-col lg:flex-wrap xl:flex-nowrap flex xl:flex-row justify-evenly md:items-center xs:overflow-hidden'> */}

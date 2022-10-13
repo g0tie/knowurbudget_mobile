@@ -6,7 +6,7 @@ import React from "react";
 const Header = () => {
     const {state} = useMainContext()
     return (
-      <div className="m-5 flex flex-row justify-center  xs:justify-between">
+      <div className="m-5 flex flex-row justify-center  xs:justify-between xs:mb-0 xs:mb-2">
         <ProgressBar />
         <ProfileIcon username={state.user.name}/>
       </div>
