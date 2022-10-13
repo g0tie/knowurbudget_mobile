@@ -40,7 +40,7 @@ const Dashboard  = () => {
     display: 'flex', flexDirection: 'column', fontSize:"13px"
   } 
   return (
-    <div className="App md:p-8 xs:pt-4" style={{height:"100vh"}}>
+    <div className="App md:p-8 xs:pt-4 bg-slate-50">
     <Layout.Header />
 
     {/* <div className='xs:flex-wrap xs:flex-col lg:flex-wrap xl:flex-nowrap flex xl:flex-row justify-evenly md:items-center xs:overflow-hidden'> */}
@@ -60,11 +60,11 @@ const Dashboard  = () => {
         ]} initialPage={1} tabBarPosition="bottom" prerenderingSiblingsNumber={1}
         >
           {[
-            <div key={1} style={{ overflowY: 'scroll', overflowX:"hidden", height:"80vh"  }}>
+            <div key={1} style={{ overflowY: 'scroll', overflowX:"hidden", height:"72vh" }}>
               <Layout.History />
             </div>
             ,
-            <div key={2} style={{overflowY: 'scroll', height:"80vh" }}>
+            <div key={2} style={{overflowY: 'scroll', height:"72vh"}}>
               <Layout.Graphics />
             </div>
           ]}

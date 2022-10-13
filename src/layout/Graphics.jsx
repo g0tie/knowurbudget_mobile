@@ -2,6 +2,7 @@ import Graph from "../components/Graph"
 import { useMainContext } from "../store/contexts";
 import { sortExpensesByMonths, sortExpensesByWeek} from '../helpers/common'
 import React from "react";
+import { seedColors } from "../store/seeders";
 
 const Graphics = () => {
   const {state} = useMainContext();
@@ -12,16 +13,7 @@ const Graphics = () => {
       {
         label: '',
         data: sortExpensesByWeek(state.types),
-        backgroundColor: [
-          '#2cf6b3',
-          '#f0f757',
-          '#ffbc42',
-          '#715BFD',
-          '#ff90b3',
-          '#25ced1',
-          '#8d918b',  
-          '#8f2d56'
-        ],
+        backgroundColor: seedColors(),
         borderColor: [
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
