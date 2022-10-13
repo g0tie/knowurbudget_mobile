@@ -29,7 +29,7 @@ const ProfileIcon = ({username}) => {
    }
 
     return (
-      <div className="absolute right-2 top-2">
+      <div className="absolute right-2 top-2 xs:relative xs:top-1 xs:-right-2">
          <button 
          onClick={() => setIsOpen(!isOpen)}
          className="text-budget block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus-border-white">
