@@ -43,6 +43,7 @@ const Expense = ({title, amount, date, type, id, remoteId, typeId}) => {
       setError(false);
 
       const expense = {
+          id,
           name: expenseTitle,
           amount: expenseAmount,
           typeid: await parseInt( expenseType ),
