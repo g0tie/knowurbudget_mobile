@@ -37,7 +37,7 @@ const Dashboard  = () => {
   } , []);
 
   const baseStyle = {
-    display: 'flex', flexDirection: 'column', fontSize:"13px"
+    display: 'flex', flexDirection: 'column', fontSize:"13px", height:"800px"
   } 
   return (
     <div className="App md:p-8 xs:pt-4 bg-slate-50">
