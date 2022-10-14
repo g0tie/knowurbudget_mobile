@@ -48,8 +48,11 @@ const Graphics = () => {
 
     return (
       <div className="flex xl:flex-row md:flex-1 xs:flex-col lg:flex-row sm:flex-row sm:flex-row items-center md:justify-around xs:w-full xs:items-center justify-between">
-        <Graph title="Cette semaine" type="pie" data={pieData}/>
         <Graph title="Ces Derniers mois" type="bar" data={stackedBarData}/>
+        <div className="mt-8">
+
+        <Graph title="Cette semaine" type="pie" data={pieData}/>
+        </div>
 
       </div>
     );

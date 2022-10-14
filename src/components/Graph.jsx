@@ -24,23 +24,22 @@ ChartJS.register(
 
 
 const pieOptions = {
-    legend: {
-        position: 'bottom',
-        labels: {
-            fontColor: "white",
-            boxWidth: 20,
-            padding: 20
+    plugins: {
+        legend: {
+          display: true,
+          position: "bottom",
+          textAlign: "center"
         }
-    }
+    },
 };
 
 const barOptions = {
-    legend: {
-        position: 'bottom',
-        labels: {
-            fontColor: "white",
-            boxWidth: 20,
-            padding: 20
+    plugins: {
+        legend: {
+          display: true,
+          position: "top",
+          align:"center",
+            padding:20
         }
     },
     scales: {
@@ -58,11 +57,11 @@ const barOptions = {
 const Graph = ({title, type, data}) => {
     const isMobile = useMediaQuery({ query: '(min-width: 300px)' })
     return(
-        <div className={type === 'pie' ? 'w-72' :'sm:w-5/12 xs:w-full' } style={{maxHeight:"500px", maxWidth:"700px"}}>
+        <div className={type === 'pie' ? 'w-72' :'sm:w-5/12 xs:w-11/12'} style={{maxHeight:"400px", maxWidth:"700px"}}>
             <h1 className='text-center text-2xl font-bold'>{title}</h1>
             {
                 type === "pie" ?
-                <Pie data={data} options={pieOptions} />
+                <Pie data={data}  options={pieOptions} />
                 :
                 <Bar options={barOptions} data={data} />
             }
