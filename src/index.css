@@ -10,3 +10,9 @@
 
     border: 1px #715bfd solid !important;
 }
+
+.rmc-tabs-tab-bar-wrap {
+    position: fixed;
+    bottom:0px;
+    width: 100%;
+}

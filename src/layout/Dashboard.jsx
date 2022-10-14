@@ -60,11 +60,11 @@ const Dashboard  = () => {
         ]} initialPage={1} tabBarPosition="bottom" prerenderingSiblingsNumber={1}
         >
           {[
-            <div key={1} style={{ overflowY: 'scroll', overflowX:"hidden", height:"72vh" }}>
+            <div key={1}>
               <Layout.History />
             </div>
             ,
-            <div key={2} style={{overflowY: 'scroll', height:"72vh"}}>
+            <div key={2} >
               <Layout.Graphics />
             </div>
           ]}
