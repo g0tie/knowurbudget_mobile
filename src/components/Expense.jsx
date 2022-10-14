@@ -1,8 +1,8 @@
 import { useMainContext } from "../store/contexts";
 import React from "react";
-import { getData, deleteData, getCurrentUser, getJWT } from "../store/database";
+import { deleteData, getCurrentUser, getDatas, updateData } from "../store/database";
 import { calculateTotalExpenses } from "../helpers/common";
-import { removeRemoteExpense } from "../api";
+import { updateRemoteExpense, removeRemoteExpense } from "../api";
 import { data } from "autoprefixer";
 import { seedColors } from "../store/seeders";
 import Modal from "./Modal";
@@ -34,14 +34,48 @@ const Expense = ({title, amount, date, type, id, remoteId, typeId}) => {
         await dispatch({type: "setCSRF", payload:data.csrf});
     }
 
-    async function updateExpense(id)
+    async function updateExpense()
     {
+      if (await title === "") {
+        setError('Veuillez saisir un titre');
+        return;
+      }
+      setError(false);
 
+      const expense = {
+          name: expenseTitle,
+          amount: expenseAmount,
+          typeid: await parseInt( expenseType ),
+          date: date,
+          user_id: await parseInt( getCurrentUser() ),
+      }
+
+      const isUserLogged = JSON.parse( window.localStorage.getItem("logged")) ?? false;
+      
+      if (isUserLogged) {
+
+          const data = await updateRemoteExpense(expense, state.csrf);
+          expense.remoteId = data.value;
+          await dispatch({type:"setCSRF", payload:data.csrf});
+      }
+
+      await updateData(id, parseInt(getCurrentUser()), 'expenses', expense);
+      const expenses = await  getDatas('expenses', getCurrentUser());
+      const totalExpenses = await calculateTotalExpenses(expenses);
+      const newState = {...state,
+        expenses,
+        totalExpenses
+      };
+
+      await dispatch({type:'initContext', payload:newState});
+      await setIsOpen(false);
+      setIsOpen(false)
     }
 
     return (
+      <>
       <div className="hover:cursor-pointer hover:bg-gray-100 rounded-lg overflow-hidden bg-white shadow-lg max-w-md w-11/12 mb-2" 
-      onClick={() => setIsOpen(true)}
+      onClick={(e) => setIsOpen(true)}
       >
           <div className="p-4">
             <div className="flex flex-row justify-between">
@@ -66,10 +100,10 @@ const Expense = ({title, amount, date, type, id, remoteId, typeId}) => {
             </div>
 
           </div>
+      </div>
 
           <Modal 
-            
-            isOpen={isOpen} title="Modifier la dépense" action={updateExpense} closeAction={() => setIsOpen(false)} deleteAction={() => removeExpense(id)}> 
+            isOpen={isOpen} title="Modifier la dépense" action={updateExpense} closeAction={setIsOpen} deleteAction={() => removeExpense(id)}> 
             
             {
                 error &&
@@ -134,7 +168,7 @@ const Expense = ({title, amount, date, type, id, remoteId, typeId}) => {
                 </div>
             </form>
             </Modal>
-      </div>
+      </>
     );
   }
   
