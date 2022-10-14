@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { login, syncData } from "../api";
+import { login, syncData, syncDataFromLocal } from "../api";
 import { useNavigate } from 'react-router-dom'
 import Alert from "../components/Alert";
 import { useMainContext } from "../store/contexts";
@@ -22,23 +22,45 @@ const Login = ({}) => {
       });
 
       if (response.status !== 200) {
-        dispatch({type:"setError", payload: response.message});
-        dispatch({type: "setLoggedState", payload: false});
-        setVisible(true);
+        await dispatch({type:"setError", payload: response.data.message ?? response.data.errors[0].msg});
+        await dispatch({type: "setLoggedState", payload: false});
+        await setVisible(true);
         return;
       } 
-      await setCurrentUser(response.data.id);
-      let data = await syncData(getCurrentUser(), response.data.csrf);
-      await dispatch({type: "setCSRF", payload: data.data.csrf}); // no token foun because set cookie not exist
 
-      await console.log(state, data.data);
+      window.localStorage.setItem("lastlog", new Date());
 
-      await dispatch({type: "setUserData", payload: data.data});
-      dispatch({type: "setError", payload: false});
-      dispatch({type: "setLoggedState", payload: true});
+      const isUserLogged = JSON.parse( window.localStorage.getItem("logged")) ?? false;
       
-      setVisible(false);
-      navigate("/");
+      if (isUserLogged) {
+        let data = await syncDataFromLocal(state, response.data.csrf);
+        
+        if (data.status !== 200) {
+          await dispatch({type:"setError", payload: response.data.message ?? response.data.errors[0].msg});
+          await dispatch({type: "setLoggedState", payload: false});
+        }
+
+        await setCurrentUser(response.data.id);
+        await dispatch({type: "setCSRF", payload: data.data.csrf});
+        await dispatch({type: "setError", payload: false});
+        await dispatch({type: "setLoggedState", payload: true});
+
+        setVisible(false);
+        navigate("/");
+
+      } else {
+
+        await setCurrentUser(response.data.id);
+        let data = await syncData(getCurrentUser(), response.data.csrf);
+        await dispatch({type: "setCSRF", payload: data.data.csrf}); // no token foun because set cookie not exist
+        
+        await dispatch({type: "setUserData", payload: data.data});
+        await dispatch({type: "setError", payload: false});
+        await dispatch({type: "setLoggedState", payload: true});
+        
+        setVisible(false);
+        navigate("/");
+      }
     }
 
     async function switchToDefaultUser()
