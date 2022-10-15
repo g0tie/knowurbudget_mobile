@@ -55,10 +55,9 @@ const Expense = ({title, amount, date, type, id, remoteId, typeId}) => {
 
       const isUserLogged = JSON.parse( window.localStorage.getItem("logged")) ?? false;
       
-      if (isUserLogged) {
+      if (state.logged) {
           console.log(expense)
           const data = await updateRemoteExpense(expense, state.csrf);
-          expense.remoteId = await data.value;
           csrf = await data.data.csrf;
 
           await dispatch({type:"setCSRF", payload:data.data.csrf});

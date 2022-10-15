@@ -16,43 +16,15 @@ const Dashboard  = () => {
   useEffect( () => {
     
     async function fetchDataAndInitContext() {
-      const isUserLogged = JSON.parse( window.localStorage.getItem("logged")) ?? false;
-      const lastLog =  Math.abs( new Date( window.localStorage.getItem("lastlog")).getDate() - new Date().getDate() );
-    
-      if (isUserLogged) {
-        let data = await syncData(getCurrentUser(), state.csrf);
-        await dispatch({type: "setCSRF", payload: data.data.csrf}); 
 
-        if (data.status === 403) {
-
-          if (lastLog > 7) {
-            navigate('/login');
-            return;
-            
-          } else {
-            const newState = await getDefaultUserData(state);
-            await console.log(newState)
-            await dispatch({type:"initContext", payload: newState});
-            return;
-          }
-        }
-        
-        await dispatch({type: "setUserData", payload: data.data});
-        await persistData(state, getCurrentUser());
-    
-      } else {
+      if (!state.logged) {
         const newState = await getDefaultUserData(state);
         await dispatch({type:"initContext", payload: newState});
-
       }
     }
 
     fetchDataAndInitContext();
   } , []);
-
-  const baseStyle = {
-    display: 'flex', flexDirection: 'column', fontSize:"13px", height:"800px"
-  } 
   return (
     <div className="App md:p-8 xs:pt-4 bg-slate-50">
     <Layout.Header />
