@@ -26,11 +26,10 @@ const AddExpenseBtn = () => {
             amount,
             typeid: await parseInt( type ),
             date: await getDatetime(),
-            user_id: await parseInt( getCurrentUser() ),
+            userId: await parseInt( getCurrentUser() ),
         }
         
         const isUserLogged = JSON.parse( window.localStorage.getItem("logged")) ?? false;
-        
         if (isUserLogged) {
 
             const data = await addRemoteExpense(expense, state.csrf);
