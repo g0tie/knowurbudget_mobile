@@ -3,7 +3,7 @@ import { login, syncData, syncDataFromLocal } from "../api";
 import { useNavigate } from 'react-router-dom'
 import Alert from "../components/Alert";
 import { useMainContext } from "../store/contexts";
-import { getDefaultUserData } from '../helpers/common';
+import { calculateTotalExpenses, getDefaultUserData } from '../helpers/common';
 import { getCurrentUser, getJWT, setCurrentUser, persistData } from "../store/database";
 
 const Login = ({}) => {
@@ -54,7 +54,7 @@ const Login = ({}) => {
         return{...expense, remoteId: expense.id, typeid: expense.typeid ?? expense.typeId} 
       }),
       user: {name: newData.username},
-      limit: { value: parseInt( newData.limit.amount) },
+      limit: { value: parseFloat( newData.limit.amount) },
       totalExpenses: calculateTotalExpenses(newData.expenses)
     }
 

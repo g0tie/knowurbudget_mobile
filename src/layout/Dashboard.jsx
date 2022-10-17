@@ -25,6 +25,10 @@ const Dashboard  = () => {
 
     fetchDataAndInitContext();
   } , []);
+
+  const baseStyle = {
+    display: 'flex', flexDirection: 'column', fontSize:"13px", height:"800px"
+  } 
   return (
     <div className="App md:p-8 xs:pt-4 bg-slate-50">
     <Layout.Header />
