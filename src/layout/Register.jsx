@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { register, syncData } from "../api";
+import { register, syncData, syncDataFromLocal } from "../api";
 import Alert from "../components/Alert";
 import { useNavigate } from "react-router-dom";
 import { useMainContext } from "../store/contexts";
 import { getCurrentUser, setCurrentUser, persistData } from "../store/database";
+import { calculateTotalExpenses } from "../helpers/common";
 
 const Register = ({}) => {
   const [password, setPassword] = useState('');
@@ -107,18 +108,18 @@ const Register = ({}) => {
           id="firstname" name="firstname" type="text" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Prénom" />
         </div>
         <div>
-          <label htmlFor="password" className="sr-only">Mot de passe</label>
-          <input 
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          id="password" name="password" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mot de passe" />
-        </div>
-        <div>
           <label htmlFor="email-address" className="sr-only">Email</label>
           <input 
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           id="email-address" name="email" type="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email" />
+        </div>
+        <div>
+          <label htmlFor="password" className="sr-only">Mot de passe</label>
+          <input 
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          id="password" name="password" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mot de passe" />
         </div>
       </div>
 
